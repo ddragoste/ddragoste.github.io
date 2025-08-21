@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advisor Ads Preview</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: #f5f5f5;
+        padding: 20px;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 20px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .header h1 {
+        color: #225742;
+        margin-bottom: 10px;
+        font-size: 2.5rem;
+      }
+
+      .header p {
+        color: #666;
+        font-size: 1.1rem;
+      }
+
+      .ads-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .ad-item {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .ad-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      }
+
+      .ad-header {
+        padding: 20px;
+        background: #225742;
+        color: white;
+      }
+
+      .ad-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .ad-description {
+        font-size: 1rem;
+        opacity: 0.9;
+      }
+
+      .ad-iframe-container {
+        position: relative;
+        width: 100%;
+        background: #f8f8f8;
+        padding: 20px;
+      }
+
+      .ad-iframe {
+        width: 100%;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .ad-iframe-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: #666;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .ad-iframe-container:hover::before {
+        opacity: 1;
+        content: "Hover to interact with this ad";
+      }
+
+      .ad-iframe-container:hover .ad-iframe {
+        z-index: 2;
+        position: relative;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 40px;
+        padding: 20px;
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
+
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .ad-header {
+          padding: 15px;
+        }
+
+        .ad-title {
+          font-size: 1.3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Advisor Ads Preview</h1>
+        <p>Interactive preview of all advisor card advertisements</p>
+      </div>
+
+      <div class="ads-grid">
+        <!-- PopUp Ad -->
+        <div class="ad-item">
+          <div class="ad-header">
+            <div class="ad-title">PopUp Advisor Card</div>
+            <div class="ad-description">
+              Modal-style popup advertisement with booking functionality
+            </div>
+          </div>
+          <div class="ad-iframe-container">
+            <iframe
+              src="ads/advisor-card-PopUp.html"
+              class="ad-iframe"
+              height="400"
+              title="PopUp Advisor Card Ad"
+              loading="lazy"
+            >
+            </iframe>
+          </div>
+        </div>
+
+        <!-- Inline Ad -->
+        <div class="ad-item">
+          <div class="ad-header">
+            <div class="ad-title">Inline Advisor Card</div>
+            <div class="ad-description">
+              Embedded inline advertisement for seamless integration
+            </div>
+          </div>
+          <div class="ad-iframe-container">
+            <iframe
+              src="ads/advisor-card-Inline.html"
+              class="ad-iframe"
+              height="400"
+              title="Inline Advisor Card Ad"
+              loading="lazy"
+            >
+            </iframe>
+          </div>
+        </div>
+
+        <!-- Redirect Ad -->
+        <div class="ad-item">
+          <div class="ad-header">
+            <div class="ad-title">Redirect Advisor Card</div>
+            <div class="ad-description">
+              Click-through advertisement that redirects to booking page
+            </div>
+          </div>
+          <div class="ad-iframe-container">
+            <iframe
+              src="ads/advisor-card-Redirect.html"
+              class="ad-iframe"
+              height="400"
+              title="Redirect Advisor Card Ad"
+              loading="lazy"
+            >
+            </iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>
+          All ads are loaded in separate iframes for isolated testing and
+          preview
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // Add some interactivity to the iframes
+      document.addEventListener("DOMContentLoaded", function () {
+        const iframes = document.querySelectorAll(".ad-iframe");
+
+        iframes.forEach((iframe) => {
+          // Handle iframe load events
+          iframe.addEventListener("load", function () {
+            console.log("Ad iframe loaded:", iframe.title);
+          });
+
+          // Handle iframe errors
+          iframe.addEventListener("error", function () {
+            console.error("Failed to load ad iframe:", iframe.title);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
