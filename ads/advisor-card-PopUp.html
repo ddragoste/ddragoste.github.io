@@ -325,15 +325,40 @@
 
     <script>
       function openCalendlyPopup() {
-        // Use the SDK to send the schedule call request
+        const calendlyUrl = "https://calendly.com/daniel-letshyve/30min";
+
+        console.log("openCalendlyPopup called");
+        console.log("window.advisorSDK:", window.advisorSDK);
+        console.log("window.AdvisorSDK:", window.AdvisorSDK);
+
+        // Use the SDK to open the advisor URL
         if (window.advisorSDK) {
-          window.advisorSDK.sendScheduleCall(
-            "https://calendly.com/daniel-letshyve/30min"
-          );
+          console.log("Advisor SDK found, calling openAdvisorUrl");
+          console.log("SDK initialized:", window.advisorSDK.getInitialized());
+
+          // Try to initialize if not already done
+          if (!window.advisorSDK.getInitialized()) {
+            console.log("SDK not initialized, trying to init...");
+            window.advisorSDK.init();
+          }
+
+          if (typeof window.advisorSDK.openAdvisorUrl === "function") {
+            window.advisorSDK.openAdvisorUrl(calendlyUrl);
+          } else {
+            console.error("openAdvisorUrl method not found on advisorSDK");
+            console.log(
+              "Available methods:",
+              Object.getOwnPropertyNames(
+                Object.getPrototypeOf(window.advisorSDK)
+              )
+            );
+            // Fallback to opening in new window
+            window.open(calendlyUrl, "_blank");
+          }
         } else {
           console.error("Advisor SDK not loaded");
-          // Fallback to opening in new window if SDK is not available
-          window.open("https://calendly.com/daniel-letshyve/30min", "_blank");
+          // Fallback to opening in new window
+          window.open(calendlyUrl, "_blank");
         }
       }
     </script>
