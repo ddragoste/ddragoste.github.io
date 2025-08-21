@@ -3,8 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="advisor-sdk.js"></script>
     <title>Advisor Ads Preview</title>
+    <script>
+      // Configure logging before loading the SDK
+      window.advisorAdHostSDKConfig = {
+        loggingEnabled: true,
+      };
+    </script>
+    <script src="advisor-ad-host-sdk.js"></script>
     <style>
       * {
         margin: 0;
@@ -148,93 +154,6 @@
           font-size: 1.3rem;
         }
       }
-
-      /* Modal Styles */
-      .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(8px);
-        display: none;
-        z-index: 1000;
-      }
-
-      .modal-overlay.show {
-        display: block;
-      }
-
-      .modal-container {
-        position: absolute;
-        width: 80vw;
-        height: 80vh;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.3);
-      }
-
-      .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        border-bottom: 1px solid #e5e7eb;
-      }
-
-      .modal-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: #1c1f2a;
-      }
-
-      .modal-close {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: #6b7280;
-        padding: 4px;
-        border-radius: 4px;
-        transition: background-color 0.2s ease;
-      }
-
-      .modal-close:hover {
-        background: #f3f4f6;
-      }
-
-      .modal-content {
-        height: calc(100% - 80px);
-        padding: 20px;
-      }
-
-      .calendly-iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-        border-radius: 8px;
-      }
-
-      @media (max-width: 768px) {
-        .content {
-          grid-template-columns: 1fr;
-          gap: 20px;
-        }
-
-        .header h1 {
-          font-size: 2rem;
-        }
-
-        .modal-container {
-          width: 95vw;
-          height: 90vh;
-        }
-      }
     </style>
   </head>
   <body>
@@ -297,25 +216,6 @@
       </div>
     </div>
 
-    <!-- Modal for Calendly -->
-    <div class="modal-overlay" id="modalOverlay">
-      <div class="modal-container">
-        <div class="modal-header">
-          <h3 class="modal-title">Schedule a Call</h3>
-          <button class="modal-close" onclick="closeModal()">&times;</button>
-        </div>
-        <div class="modal-content">
-          <iframe
-            id="calendlyIframe"
-            class="calendly-iframe"
-            title="Calendly Scheduling"
-            allow="camera; microphone; geolocation"
-          >
-          </iframe>
-        </div>
-      </div>
-    </div>
-
     <script>
       // Add some interactivity to the iframes
       document.addEventListener("DOMContentLoaded", function () {
@@ -332,65 +232,6 @@
             console.error("Failed to load ad iframe:", iframe.title);
           });
         });
-
-        // Listen for advisor SDK schedule call events
-        document.addEventListener("advisor:scheduleCall", function (event) {
-          const calendlyUrl = event.detail.calendlyUrl;
-          console.log("Received schedule call request from SDK:", calendlyUrl);
-          openModal(calendlyUrl);
-        });
-
-        // Listen for advisor URL events using the AdvisorSDK
-        if (window.advisorSDK) {
-          window.advisorSDK.receiveAdvisorUrl(function (advisorUrl) {
-            console.log(
-              "Received advisor URL from iframe via AdvisorSDK:",
-              advisorUrl
-            );
-            openModal(advisorUrl);
-          });
-        }
-      });
-
-      // Modal functions
-      function openModal(calendlyUrl) {
-        const modal = document.getElementById("modalOverlay");
-        const iframe = document.getElementById("calendlyIframe");
-
-        // Set the Calendly URL
-        iframe.src = calendlyUrl;
-
-        // Show the modal
-        modal.classList.add("show");
-        document.body.style.overflow = "hidden";
-      }
-
-      function closeModal() {
-        const modal = document.getElementById("modalOverlay");
-        const iframe = document.getElementById("calendlyIframe");
-
-        // Hide the modal
-        modal.classList.remove("show");
-        document.body.style.overflow = "auto";
-
-        // Clear the iframe source
-        iframe.src = "";
-      }
-
-      // Close modal when clicking outside
-      document
-        .getElementById("modalOverlay")
-        .addEventListener("click", function (event) {
-          if (event.target === this) {
-            closeModal();
-          }
-        });
-
-      // Close modal with Escape key
-      document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") {
-          closeModal();
-        }
       });
     </script>
   </body>
