@@ -65,19 +65,14 @@
 
       .ad-header {
         padding: 20px;
-        background: #225742;
-        color: white;
+        color: #666;
       }
 
       .ad-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 8px;
-      }
-
-      .ad-description {
-        font-size: 1rem;
-        opacity: 0.9;
+        font-size: 1.1rem;
+        font-weight: 400;
+        margin-bottom: 0;
+        opacity: 0.8;
       }
 
       .ad-iframe-container {
@@ -88,11 +83,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        height: 450px;
       }
 
       .ad-iframe {
         width: 508px;
-        height: 366px;
+        height: 380px;
         border: none;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -155,38 +151,11 @@
   </head>
   <body>
     <div class="container">
-      <div class="header">
-        <h1>Advisor Ads Preview</h1>
-        <p>Interactive preview of all advisor card advertisements</p>
-      </div>
-
       <div class="ads-grid">
-        <!-- PopUp Ad -->
-        <div class="ad-item">
-          <div class="ad-header">
-            <div class="ad-title">PopUp Advisor Card</div>
-            <div class="ad-description">
-              Modal-style popup advertisement with booking functionality
-            </div>
-          </div>
-          <div class="ad-iframe-container">
-            <iframe
-              src="ads/advisor-card-PopUp.html"
-              class="ad-iframe"
-              title="PopUp Advisor Card Ad"
-              loading="lazy"
-            >
-            </iframe>
-          </div>
-        </div>
-
         <!-- Inline Ad -->
         <div class="ad-item">
           <div class="ad-header">
             <div class="ad-title">Inline Advisor Card</div>
-            <div class="ad-description">
-              Embedded inline advertisement for seamless integration
-            </div>
           </div>
           <div class="ad-iframe-container">
             <iframe
@@ -203,15 +172,28 @@
         <div class="ad-item">
           <div class="ad-header">
             <div class="ad-title">Redirect Advisor Card</div>
-            <div class="ad-description">
-              Click-through advertisement that redirects to booking page
-            </div>
           </div>
           <div class="ad-iframe-container">
             <iframe
               src="ads/advisor-card-Redirect.html"
               class="ad-iframe"
               title="Redirect Advisor Card Ad"
+              loading="lazy"
+            >
+            </iframe>
+          </div>
+        </div>
+
+        <!-- PopUp Ad -->
+        <div class="ad-item">
+          <div class="ad-header">
+            <div class="ad-title">PopUp Advisor Card</div>
+          </div>
+          <div class="ad-iframe-container">
+            <iframe
+              src="ads/advisor-card-PopUp.html"
+              class="ad-iframe"
+              title="PopUp Advisor Card Ad"
               loading="lazy"
             >
             </iframe>
